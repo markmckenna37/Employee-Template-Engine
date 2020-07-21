@@ -1,0 +1,19 @@
+{
+  "name": "employee-template-engine",
+  "version": "1.0.0",
+  "description": "Employee summary template generation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/markmckenna37/Employee-Template-Engine.git"
+  },
+  "author": "Mark M",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/markmckenna37/Employee-Template-Engine/issues"
+  },
+  "homepage": "https://github.com/markmckenna37/Employee-Template-Engine#readme"
+}
