@@ -8,13 +8,16 @@ class Employee {
         this.email = email
     }
     getName() {
-        console.log(`Employee name: ${this.name}`);
+        return this.name
     }
-    getID() {
-        console.log(`Employee id: ${this.id}`);
+    getId() {
+        return this.id
     }
     getEmail() {
-        console.log(`Employee email: ${this.email}`); 
+        return this.email
+    }
+    getRole() {
+        return "Employee"
     }
 }
 
