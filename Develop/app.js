@@ -15,38 +15,100 @@ const { prompt } = require("inquirer");
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-// function promptUser() {
-//     console.log("Let's build your team!")
-//     return inquirer.prompt([
-//     {
-//         type: "input",
-//         message: "What is your manager's name?",
-//         name: "mName"
-//     },
-//     {
-//         type: "input",
-//         message: "What is your manager's id number?",
-//         name: "mid"
-//     },
-//     {
-//         type: "input",
-//         message: "What is your manager's email address?",
-//         name: "mEmail"
-//     },
-//     {
+function promptUser() {
+    console.log("Let's build your team!")
+    return inquirer.prompt([
+    {
+        type: "input",
+        message: "What is your manager's name?",
+        name: "mName"
+    },
+    {
+        type: "input",
+        message: "What is your manager's id number?",
+        name: "mid"
+    },
+    {
+        type: "input",
+        message: "What is your manager's email address?",
+        name: "mEmail"
+    }
+
+])
+}
+function chooseNextEmployee() {
+    return inquirer.prompt(
+        {
+            type: "list",
+            message: "Which role would you like to add to your team?",
+            choices: ["Engineer", "Intern", "I'm done adding team members."],
+            name: "position"
+    })
+}
+//         {
 //         type: "list",
 //         message: "Which type of team member would you like to add to your team?",
-//         choices: ["Engineer", "Intern"],
+//         choices: ["Engineer", "Intern", "I'm done adding team members."],
 //         name: "position"
-//     }
-// ])
-// }
-// async function init() {
-//     const userData = await promptUser()
-//     console.log(userData)
-// }
+//         }
+// )
+    
+function engineerPrompt() {
+    return inquirer.prompt([
+        {
+            type: "input",
+            message: "What is your engineer's name?",
+            name: "eName"
+        },
+        {
+            type: "input",
+            message: "What is your engineer's id number?",
+            name: "eid"
+        },
+        {
+            type: "input",
+            message: "What is your engineer's email address?",
+            name: "eEmail"
+        },
+        {
+            type: "input",
+            message: "What is your GitHub",
+            name: "github"
+        }
+    ])
+} 
+function internPrompt() {
+    return inquirer.prompt([
+        {
+            type: "input",
+            message: "What is your intern's name?",
+            name: "eName"
+        },
+        {
+            type: "input",
+            message: "What is your intern's id number?",
+            name: "eid"
+        },
+        {
+            type: "input",
+            message: "What is your intern's email address?",
+            name: "mEmail"
+        },
+        {
+            type: "input",
+            message: "What school is your intern attending?",
+            name: "school"
+        }
+    ])
+} 
+async function init() {
+    const userData = await promptUser()
+    if (userData.position === "Engineer") {
+        engineerPrompt()
+    }
+}
 
-// init()
+init()
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
