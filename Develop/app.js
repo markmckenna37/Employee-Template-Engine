@@ -3,21 +3,23 @@ const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
+const util = require("util");
 const fs = require("fs");
-
+const writeFileAsync = util.promisify(fs.writeFile);
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 const { argv } = require("process");
 const { prompt } = require("inquirer");
+const employees = [];
 
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-const manager = new Manager(function managerPrompt() {
+function managerPrompt() {
     console.log("Let's build your team!")
-    return inquirer.prompt([
+    return prompt([
     {
         type: "input",
         message: "What is your manager's name?",
@@ -41,7 +43,6 @@ const manager = new Manager(function managerPrompt() {
 
 ])
 }
-)
 
 function chooseNextEmployee() {
     return inquirer.prompt(
@@ -53,7 +54,7 @@ function chooseNextEmployee() {
     })
 }
 
-const engineer = new Engineer(function engineerPrompt() {
+function engineerPrompt() {
     return inquirer.prompt([
         {
             type: "input",
@@ -77,8 +78,7 @@ const engineer = new Engineer(function engineerPrompt() {
         }
     ])
 } 
-)
-const intern = new Intern(function internPrompt() {
+function internPrompt() {
     return inquirer.prompt([
         {
             type: "input",
@@ -88,7 +88,7 @@ const intern = new Intern(function internPrompt() {
         {
             type: "input",
             message: "What is your intern's id number?",
-            name: "nid"
+            name: "id"
         },
         {
             type: "input",
@@ -102,28 +102,41 @@ const intern = new Intern(function internPrompt() {
         }
     ])
 } 
-)
 async function init() {
-    const userData = await managerPrompt()
+    const {name, id, email, officeNumber} = await managerPrompt()
+    const manager = new Manager(name, id, email, officeNumber)
+    employees.push(manager)
     newPrompt()
 }
 async function newPrompt() {
     const nextEmployee = await chooseNextEmployee()
-    if (nextEmployee.position === "Engineer") {
-        await engineerPrompt();
-        newPrompt()
+    if (nextEmployee.role === "Engineer") {
+       const {name, id, email, github} = await engineerPrompt();
+       const engineer = new Engineer(name, id, email, github);
+       employees.push(engineer);
+       newPrompt();
     }
-    else if (nextEmployee.position === "Intern") {
-        await internPrompt();
+    else if (nextEmployee.role === "Intern") {
+        const {name, id, email, school} = await internPrompt();
+        const intern = new Intern(name, id, email, school);
+        employees.push(intern);
         newPrompt()
     }
     else {
+        const renderHTML = render(employees);
+        fs.mkdir("output", function(err) {
+            console.log(err);
+        })
+        fs.writeFile("team.html", "", function(err) {
+            console.log(err);
+        })
+        writeFileAsync(outputPath, renderHTML);
         console.log("Success!");
     }
 }
 
 
-init()
+init();
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
