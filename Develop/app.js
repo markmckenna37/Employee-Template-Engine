@@ -3,9 +3,7 @@ const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
-const util = require("util");
 const fs = require("fs");
-const writeFileAsync = util.promisify(fs.writeFile);
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
@@ -103,6 +101,7 @@ function internPrompt() {
     ])
 } 
 async function init() {
+    fs.rmdirSync(OUTPUT_DIR, { recursive: true });
     const {name, id, email, officeNumber} = await managerPrompt()
     const manager = new Manager(name, id, email, officeNumber)
     employees.push(manager)
@@ -123,14 +122,14 @@ async function newPrompt() {
         newPrompt()
     }
     else {
+        console.log(employees)
         const renderHTML = render(employees);
-        fs.mkdir("output", function(err) {
-            console.log(err);
+        fs.mkdir(__dirname + '/output', function (err) {
+            if (err) console.log(err);
         })
-        fs.writeFile("team.html", "", function(err) {
-            console.log(err);
-        })
-        writeFileAsync(outputPath, renderHTML);
+        fs.writeFile(outputPath, renderHTML, function (err) {
+            if (err) console.log(err);
+        });
         console.log("Success!");
     }
 }

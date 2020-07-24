@@ -1,0 +1,21 @@
+.jumbotron {
+    background-color: aliceblue;
+}
+body,
+.team-area,
+.list-group-item {
+    background-color: rgb(247, 247, 247);
+}
+.employee-card {
+    background-color: aliceblue;
+    margin: 2rem;
+    box-shadow: 3px 3px #888888;
+}
+.team-area {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.list-group-item {
+    width: 200px;
+}
