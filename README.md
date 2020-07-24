@@ -1,5 +1,5 @@
 # Employee-Template-Engine
-  
+  ![](Assets/screenshot.png)
 ## Testing
   
 ![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)
@@ -8,6 +8,7 @@
   
 ## Description 
 An app for development teams to create a webpage with profiles for all of the members of your team, with roles and contact info.
+[GitHub Repository](https://github.com/markmckenna37/Employee-Template-Engine)
                       
 --- 
                       
